@@ -48,3 +48,8 @@ a:visited{
   overflow-y: scroll;
   height: 50vh;
 }
+
+.message{
+  display: flex;
+  font-size: 1vw;
+}

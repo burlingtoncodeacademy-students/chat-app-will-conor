@@ -23,10 +23,11 @@ const ChatBox = ()=> {
     return(
         
         <div className="chat-box">{messageData.map((message, index) => (
-            <div>
+            <div className="message">
+                <h2>{message.author}:</h2>
             <h2>{message.when}</h2>
             <h2>{message.body}</h2>
-            <h2>{message.author}</h2>
+            
             </div>
         ))}
             
