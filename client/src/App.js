@@ -11,9 +11,9 @@ function App() {
       <div className="container">
         {/* This container is going to contain title/mainroom/text-input */}
         <div className="main-room">
-          <header>
-            <Header></Header>
-          </header>
+        
+            <Header  name="Main Room"/>
+        
           <div className="chat">
             <ChatBox />
           </div>
@@ -23,6 +23,7 @@ function App() {
         </div>
 
         <div className="all-rooms">
+          <Header name="All Rooms" />
           <div className="rooms">
             <Link to={"rooms/pets"}>Pets</Link>
             <Link to={"rooms/games"}>Games</Link>

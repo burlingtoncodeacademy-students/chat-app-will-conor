@@ -5,8 +5,29 @@
 
 .container{
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width:60vw;
+
+  font-size: 2vw;
+  
+  
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+a:visited{
+  text-decoration: none;
+}
+
+.chat{
+  background-color: black;
+  color: white;
 }
 
 .main-room{
@@ -16,4 +37,14 @@
 
 .buttons-flex{
   display: flex;
+}
+
+.rooms{
+  display: flex;
+  flex-direction: column;
+  background-color: purple;
+}
+.chat-box{
+  overflow-y: scroll;
+  height: 50vh;
 }

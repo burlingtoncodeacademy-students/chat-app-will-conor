@@ -1,8 +1,37 @@
 import React from 'react'
+import {useState, useEffect} from 'react'
 
-function ChatBox(props){
+const ChatBox = ()=> {
+    const [messageData, setMessageData] = useState([])
+    
+   
+    useEffect(()=>{
+        
+        if(messageData.length === 0){
+        fetch('/messages')
+        .then((response) =>response.json())
+        .then((result) =>{
+            console.log(result)
+            setMessageData(result)
+        })
+        }
+    }, [messageData])
+
+   
+   
+
     return(
-        <div>This is the Chatbox</div>
+        
+        <div className="chat-box">{messageData.map((message, index) => (
+            <div>
+            <h2>{message.when}</h2>
+            <h2>{message.body}</h2>
+            <h2>{message.author}</h2>
+            </div>
+        ))}
+            
+         
+        </div>
     )
 }
 
