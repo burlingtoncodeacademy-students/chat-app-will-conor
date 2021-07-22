@@ -1,10 +1,9 @@
 import React from "react";
-import { useState, useEffect, useInterval } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const ChatBox = (props) => {
   const [messageData, setMessageData] = useState([]);
-
-
+ 
 
   useEffect(() => {
     if (messageData.length === 0) {
@@ -15,7 +14,7 @@ const ChatBox = (props) => {
             setMessageData(result);
           });
       }
-      
+
       setInterval(()=>{
         if (messageData.length === 0) {
             fetch(`/${props.chatName}`)
@@ -26,8 +25,17 @@ const ChatBox = (props) => {
               });
           }
       }, 10000)
-    
+    clearInterval()
   }, [messageData]);
+
+  const messageEnd = useRef(null)
+
+  const scrollBottom = () =>{
+      messageEnd.current?.scrollIntoView({behavior: 'smooth'})
+  }
+  useEffect(()=>{
+      scrollBottom()
+  }, [messageData.length === messageData.length ? messageData : null ])
 
   return (
     <div className="chat-box">
@@ -40,6 +48,7 @@ const ChatBox = (props) => {
           <h2>&nbsp;{message.body}</h2>
         </div>
       ))}
+      <div ref={messageEnd}></div>
     </div>
   );
 };
