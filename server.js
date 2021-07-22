@@ -26,37 +26,86 @@ db.on(`error`, console.error.bind(console, "connection error"));
 const messageSchema = new mongoose.Schema({
   author: String,
   body: String,
-  when: Date,
+  when: String,
 });
 
 const Message = mongoose.model("Message", messageSchema);
+const PetMessage = mongoose.model("Pet", messageSchema )
+const GameMessage = mongoose.model("Games", messageSchema)
 ///:db/:coll
-app.post("/create/message", async (req, res) => {
+app.post("/create/message/home", async (req, res) => {
   let messageDate = new Date();
-  let formattedMessageDate = `${messageDate.getFullYear()}-${
-    messageDate.getMonth
-  }-${messageDate.getDate}`;
-  let messageTime = `${messageDate.getHours}:${messageDate.getMinutes}:${messageDate.getSeconds}`;
-  let finalMessageDate = `${formattedMessageDate} ${messageTime}`
+  let hours = ((messageDate.getHours() + 11) % 12) + 1;
+  let minutes = (messageDate.getMinutes()<10?`0`:``) + messageDate.getMinutes();
+  
+  /* if(minutes < 10){
+    
+    minutes = "0"+ messageDate.getMinutes()
+    console.log(minutes)
+  } */
+
   let newEntry = Message({
     author: req.body.author,
     body: req.body.body,
-    when: finalMessageDate,
+    when: hours + ":" + minutes,
   });
 
   await newEntry.save();
 
-  /* let collection = await dbConnect(req.params.db, req.params.coll);
-  await collection.insertOne(newEntry);
- */
+  
   res.redirect("/");
 });
+app.post("/create/message/pets", async (req, res) => {
+  let messageDate = new Date()
+  let hours = ((messageDate.getHours() + 11) %12) + 1;
+  let minutes = (messageDate.getMinutes()<10?`0`:``) + messageDate.getMinutes()
+let newEntry = PetMessage({
+  author: req.body.author,
+  body: req.body.body,
+  when: hours + ":" + minutes
+})
+
+await newEntry.save()
+res.redirect('/rooms/pets')
+})
+app.post("/create/message/games", async (req, res) => {
+  let messageDate = new Date()
+  let hours = ((messageDate.getHours() + 11) %12) + 1;
+  let minutes = (messageDate.getMinutes()<10?`0`:``) + messageDate.getMinutes()
+let newEntry = GameMessage({
+  author: req.body.author,
+  body: req.body.body,
+  when: hours + ":" + minutes
+})
+
+await newEntry.save()
+res.redirect('/rooms/games')
+})
+
+
+
+
 
 app.get("/messages", async (req, res) => {
   let allMessages = await Message.find({});
 
   res.send(allMessages);
 });
+
+app.get("/pets", async (req, res) => {
+  let allMessages = await PetMessage.find({});
+
+  res.send(allMessages);
+});
+
+app.get("/games", async (req, res) => {
+  let allMessages = await GameMessage.find({});
+
+  res.send(allMessages);
+});
+
+
+
 
 app.listen(port, () => {
   console.log("listening on port: " + port);

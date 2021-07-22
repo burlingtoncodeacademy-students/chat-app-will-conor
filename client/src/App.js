@@ -11,22 +11,57 @@ function App() {
       <div className="container">
         {/* This container is going to contain title/mainroom/text-input */}
         <div className="main-room">
-        
-            <Header  name="Main Room"/>
-        
+          <Header name="Main Room" />
+
           <div className="chat">
-            <ChatBox />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                component={() => {
+                  return (
+                    <div>
+                      <ChatBox chatName="messages" />
+                      <ChatButtons btnName="home" />
+                    </div>
+                  );
+                }}
+              />
+              <Route
+                path="/rooms/pets"
+                component={() => {
+                  return (
+                    <div>
+                      <ChatBox chatName="pets" />
+                      <ChatButtons btnName="pets" />
+                    </div>
+                  );
+                }}
+              />
+              <Route
+                path="/rooms/games"
+                component={() => {
+                  return (
+                    <div>
+                      <ChatBox chatName="games" />
+                      <ChatButtons btnName="games" />
+                    </div>
+                  );
+                }}
+              />
+            </Switch>
           </div>
           <div className="buttons-flex">
-            <ChatButtons />
+            {/* <ChatButtons /> */}
           </div>
         </div>
 
         <div className="all-rooms">
           <Header name="All Rooms" />
           <div className="rooms">
-            <Link to={"rooms/pets"}>Pets</Link>
-            <Link to={"rooms/games"}>Games</Link>
+            <Link to={"/"}>Home</Link>
+            <Link to={"/rooms/pets"}>Pets</Link>
+            <Link to={"/rooms/games"}>Games</Link>
           </div>
         </div>
       </div>
