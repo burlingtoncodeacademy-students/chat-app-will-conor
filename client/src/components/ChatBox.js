@@ -10,7 +10,7 @@ const ChatBox = (props) => {
         fetch(`/${props.chatName}`)
           .then((response) => response.json())
           .then((result) => {
-            console.log(result);
+            
             setMessageData(result);
           });
       }
@@ -20,7 +20,7 @@ const ChatBox = (props) => {
             fetch(`/${props.chatName}`)
               .then((response) => response.json())
               .then((result) => {
-                console.log(result);
+               
                 setMessageData(result);
               });
           }
@@ -40,7 +40,7 @@ const ChatBox = (props) => {
   return (
     <div className="chat-box">
       {messageData.map((message, index) => (
-        <div className="message">
+        <div key={index} className="message">
             <div className="author-flex">
           <h2>{message.when} --&nbsp;</h2>
           <h2>{message.author} :&nbsp;</h2>

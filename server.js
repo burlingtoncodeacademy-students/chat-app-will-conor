@@ -38,12 +38,7 @@ app.post("/create/message/home", async (req, res) => {
   let hours = ((messageDate.getHours() + 11) % 12) + 1;
   let minutes = (messageDate.getMinutes()<10?`0`:``) + messageDate.getMinutes();
   
-  /* if(minutes < 10){
-    
-    minutes = "0"+ messageDate.getMinutes()
-    console.log(minutes)
-  } */
-
+  console.log(req.body.body.length)
   let newEntry = Message({
     author: req.body.author,
     body: req.body.body,
