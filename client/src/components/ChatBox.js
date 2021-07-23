@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 const ChatBox = (props) => {
   const [messageData, setMessageData] = useState([]);
- 
+ const [isBottom, setIsBottom] = useState(true)
 
   useEffect(() => {
     if (messageData.length === 0) {
@@ -28,17 +28,37 @@ const ChatBox = (props) => {
     clearInterval()
   }, [messageData]);
 
+  const handleScroll = (evt) => {
+    let bottom = evt.target.scrollHeight - evt.target.scrollTop === evt.target.clientHeight
+    if(bottom) {
+      setIsBottom(true)
+    } else {
+      setIsBottom(false)
+    }
+  }
+
   const messageEnd = useRef(null)
+  const [scrollHeight, setScrollHeight] = useState(null)
 
   const scrollBottom = () =>{
+    
       messageEnd.current?.scrollIntoView({behavior: 'smooth'})
+    
+    
   }
+
   useEffect(()=>{
+    if(isBottom){
       scrollBottom()
-  }, [messageData.length === messageData.length ? messageData : null ])
+      console.log(`bottom`)
+    } else {
+      console.log('not bottom')
+    }
+      
+  }, [messageData])
 
   return (
-    <div className="chat-box">
+    <div className="chat-box" onScroll={handleScroll}> 
       {messageData.map((message, index) => (
         <div key={index} className="message">
             <div className="author-flex">
